@@ -1,8 +1,12 @@
-export default function Layout({children}) {
+import { Children } from "react";
+
+export default function Header() {
     return (
         <>
-            <h1>레이아웃</h1>
-            <div>{children}</div>
+           <Header></Header>
+           <h1>푸터입니다.</h1>
+           <div>{Children}</div>
+           <Footer></Footer>
         </>
     )
 }
