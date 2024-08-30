@@ -1,8 +1,12 @@
-import Layout from '../components/layout'
-export default function PageNotFound() {
-    return (
+import Layout from "@/components/layout";
+import { Play } from "next/font/google";
+import Animation from "@/components/animation";
+import Lottie from "react-lottie-player";
+
+export default function PageNotFound(){
+    return(
         <Layout>
-            <h1>페이지를 찾을 수 없어요 ㅜㅜ</h1>
+            <Animation></Animation>
         </Layout>
     )
 }

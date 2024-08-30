@@ -1,0 +1,9 @@
+.footer {
+    background-color: aquamarine;
+    position: fixed;
+    bottom: 0; left: 0;
+    height: 8pvh;
+    width: 100%;
+    text-align: center;
+    padding: 5px;
+}

@@ -1,13 +1,16 @@
-import Header from './header'
-import Footer from './footer'
+import Header from "./header"
+import Footer from "./footer"
+import Container from '@mui/material/Container';
 
-export default function Layout({children}) {
-    return (
+
+export default function Layout({children}){
+    return(
         <>
-           <Header></Header>
-                <h1>푸터입니다.</h1>
-                <div>{children}</div>
-           <Footer></Footer>
+            <Header></Header>
+            <Container fixed>
+            <div>{children}</div>
+            </Container>
+            <Footer></Footer>
         </>
     )
 }
