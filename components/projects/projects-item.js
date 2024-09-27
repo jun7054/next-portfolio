@@ -6,16 +6,18 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import {useRouter} from 'next/router';
 
+import styles from './project-item.module.css';
+
 export default function ProjectItem({data}) {
     const title = data.properties.이름.title[0]?.plain_text;
     const tags = data.properties.태그.multi_select;
     const start = data.properties?.작업기간.date.start;
     const end = data.properties?.작업기간.date.end;
-    const description = data.properties?.텍스트.rich_text[0].plain_text;
+    const description = data.properties?.설명.rich_text[0].plain_text;
     const github = data.properties?.Github.url;
-    const imgSrc = data.cover.file?.url || data.cover.external.url;
-    const demo = data.properties?.Demo.rul;
-    console.log(demo);
+    const demo = data.properties?.Demo.url;
+    const imgUrl = data.properties?.Image.url;
+
     const router = useRouter();
 
     function countWorkDays(start,end) {
@@ -31,34 +33,33 @@ export default function ProjectItem({data}) {
         }
         return workdays;
     }
-    const workDay = countWorkDays(start,end);
-        return (
-        <div>
-            <Card sx={{maxWidth: 345}}>
-                <CardMedia
-                    sx={{height : 300}}
-                    image = {imgSrc}
-                    title = {title}
-                />
-                <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                        {title}
-                    </Typography>
-                    <Typography variant="body1" sx={{color : 'text.secondary'}}>
-                        {description}
-                    </Typography>
-                    <Typography variant="body2" sx={{color : 'text.secondary'}}>
-                        {description}
-                    </Typography>
-                    <Typography variant="body2" sx={{color : 'text.secondary'}}>
-                        {tags.map((aTag) => (<span key={aTag.id}>#{aTag.name}</span>))}
-                    </Typography>
-                </CardContent>
-                <CardActions>
-                    {demo && (<Button></Button>)}
-                    <Button size="small" onClick={()=>{router.push(github)}}>Visit Github</Button>
-                </CardActions>
-            </Card>
-        </div>
+    
+    const workDay = countWorkDays(start,end)
+    return (
+      <Card className={styles.cardItem} sx={{ width: 345, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+      <CardMedia sx={{ height: 300 }} image={imgUrl} title={title} />
+      <CardContent sx={{ flexGrow: 1 }}>
+        <Typography gutterBottom variant="h5" component="div">
+          {title}
+        </Typography>
+        <Typography variant="body1" sx={{ color: 'text.secondary' }}>
+          {workDay} 일
+        </Typography>
+        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+          {description}
+        </Typography>
+        <Typography variant="body3" sx={{ color: 'text.secondary' }}>
+          {tags.map((aTag) => (
+            <span key={aTag.id}>#{aTag.name} </span>
+          ))}
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <Button size="small" onClick={() => { router.push(github); }}>Visit Github</Button>
+        {demo && (
+          <Button size="small" onClick={() => { router.push(demo); }}>View Demo</Button>
+        )}
+      </CardActions>
+    </Card>
     )
 }
